@@ -37,20 +37,15 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                  itemCount: 20,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text('도서관명'),
-                      subtitle: Text('전화번호'),
-                      trailing: Text('정기휴관일'),
-
-                    );
-                  })
-
-
-
-            ),
+                child: ListView.builder(
+                    itemCount: 20,
+                    itemBuilder: (context, index) {
+                      return const ListTile(
+                        title: Text('도서관명'),
+                        subtitle: Text('전화번호'),
+                        trailing: Text('정기휴관일'),
+                      );
+                    })),
           ],
         ),
       ),
