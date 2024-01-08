@@ -1,9 +1,12 @@
 class SeoulLibraryScheduleInfo {
   SeoulLibraryScheduleInfo({
-      this.seoulLibraryTimeInfo,});
+    this.seoulLibraryTimeInfo,
+  });
 
   SeoulLibraryScheduleInfo.fromJson(dynamic json) {
-    seoulLibraryTimeInfo = json['SeoulLibraryTimeInfo'] != null ? SeoulLibraryTimeInfo.fromJson(json['SeoulLibraryTimeInfo']) : null;
+    seoulLibraryTimeInfo = json['SeoulLibraryTimeInfo'] != null
+        ? SeoulLibraryTimeInfo.fromJson(json['SeoulLibraryTimeInfo'])
+        : null;
   }
   SeoulLibraryTimeInfo? seoulLibraryTimeInfo;
 
@@ -14,28 +17,28 @@ class SeoulLibraryScheduleInfo {
     }
     return map;
   }
-
 }
 
 class SeoulLibraryTimeInfo {
   SeoulLibraryTimeInfo({
-      this.listTotalCount, 
-      this.result, 
-      this.row,});
+    this.listTotalCount,
+    this.result,
+    this.rowInfo,
+  });
 
   SeoulLibraryTimeInfo.fromJson(dynamic json) {
     listTotalCount = json['list_total_count'];
     result = json['RESULT'] != null ? Result.fromJson(json['RESULT']) : null;
     if (json['row'] != null) {
-      row = [];
+      rowInfo = [];
       json['row'].forEach((v) {
-        row?.add(Row.fromJson(v));
+        rowInfo?.add(RowInfo.fromJson(v));
       });
     }
   }
   num? listTotalCount;
   Result? result;
-  List<Row>? row;
+  List<RowInfo>? rowInfo;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -43,27 +46,27 @@ class SeoulLibraryTimeInfo {
     if (result != null) {
       map['RESULT'] = result?.toJson();
     }
-    if (row != null) {
-      map['row'] = row?.map((v) => v.toJson()).toList();
+    if (rowInfo != null) {
+      map['row'] = rowInfo?.map((v) => v.toJson()).toList();
     }
     return map;
   }
-
 }
 
-class Row {
-  Row({
-      this.lbrryseqno, 
-      this.lbrryname, 
-      this.gucode, 
-      this.codevalue, 
-      this.adres, 
-      this.fdrmclosedate, 
-      this.telno, 
-      this.xcnts, 
-      this.ydnts,});
+class RowInfo {
+  RowInfo({
+    this.lbrryseqno,
+    this.lbrryname,
+    this.gucode,
+    this.codevalue,
+    this.adres,
+    this.fdrmclosedate,
+    this.telno,
+    this.xcnts,
+    this.ydnts,
+  });
 
-  Row.fromJson(dynamic json) {
+  RowInfo.fromJson(dynamic json) {
     lbrryseqno = json['LBRRY_SEQ_NO'];
     lbrryname = json['LBRRY_NAME'];
     gucode = json['GU_CODE'];
@@ -97,13 +100,13 @@ class Row {
     map['YDNTS'] = ydnts;
     return map;
   }
-
 }
 
 class Result {
   Result({
-      this.code, 
-      this.message,});
+    this.code,
+    this.message,
+  });
 
   Result.fromJson(dynamic json) {
     code = json['CODE'];
@@ -118,5 +121,4 @@ class Result {
     map['MESSAGE'] = message;
     return map;
   }
-
 }

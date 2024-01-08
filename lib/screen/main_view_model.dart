@@ -1,23 +1,27 @@
+import 'dart:math';
+
 import 'package:library_list/data/data_source/seoul_library_schedule_info_api.dart';
 import 'package:library_list/data/model/seoul_library_schedule_info.dart';
 
 class MainViewModel {
   final libraryAPi = SeoulLibraryScheduleInfoApi();
 
-List<SeoulLibraryScheduleInfo> _libraryItems = [];
-List<SeoulLibraryScheduleInfo> get libraryItems => _libraryItems;
+  List<RowInfo> _libraryItems = [];
+  List<RowInfo> get libraryItems => _libraryItems;
 
-bool _isLoading = false;
-bool get isLoading => _isLoading;
+  late SeoulLibraryTimeInfo _library;
 
-Future<void> searchInfo(String query) async {
-  _isLoading = true;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
 
- _libraryItems = await SeoulLibraryScheduleInfo.fromJson(
-     libraryAPi.getSeoulLibraryScheduleInfoList()
- )
+  Future<void> searchInfo(String query) async {
+    _isLoading = true;
 
-}
+    SeoulLibraryTimeInfo dump = SeoulLibraryTimeInfo.fromJson(
+        libraryAPi.getSeoulLibraryScheduleInfoList());
 
+    _libraryItems = dump.rowInfo ?? [];
 
+    _isLoading = false;
+  }
 }
