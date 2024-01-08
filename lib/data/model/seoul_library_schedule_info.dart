@@ -1,95 +1,122 @@
 class SeoulLibraryScheduleInfo {
-  int listTotalCount;
-  Result result;
-  List<Row> row;
-
   SeoulLibraryScheduleInfo({
-    required this.listTotalCount,
-    required this.result,
-    required this.row,
-  });
+      this.seoulLibraryTimeInfo,});
 
-  factory SeoulLibraryScheduleInfo.fromJson(Map<String, dynamic> json) {
-    return SeoulLibraryScheduleInfo(
-      listTotalCount: json['list_total_count'],
-      result: Result.fromJson(json['RESULT']),
-      row: List<Row>.from(json['row'].map((x) => Row.fromJson(x))),
-    );
+  SeoulLibraryScheduleInfo.fromJson(dynamic json) {
+    seoulLibraryTimeInfo = json['SeoulLibraryTimeInfo'] != null ? SeoulLibraryTimeInfo.fromJson(json['SeoulLibraryTimeInfo']) : null;
   }
+  SeoulLibraryTimeInfo? seoulLibraryTimeInfo;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    if (seoulLibraryTimeInfo != null) {
+      map['SeoulLibraryTimeInfo'] = seoulLibraryTimeInfo?.toJson();
+    }
+    return map;
+  }
+
 }
 
-class Result {
-  String code;
-  String message;
+class SeoulLibraryTimeInfo {
+  SeoulLibraryTimeInfo({
+      this.listTotalCount, 
+      this.result, 
+      this.row,});
 
-  Result({
-    required this.code,
-    required this.message,
-  });
-
-  factory Result.fromJson(Map<String, dynamic> json) {
-    return Result(
-      code: json['CODE'],
-      message: json['MESSAGE'],
-    );
+  SeoulLibraryTimeInfo.fromJson(dynamic json) {
+    listTotalCount = json['list_total_count'];
+    result = json['RESULT'] != null ? Result.fromJson(json['RESULT']) : null;
+    if (json['row'] != null) {
+      row = [];
+      json['row'].forEach((v) {
+        row?.add(Row.fromJson(v));
+      });
+    }
   }
+  num? listTotalCount;
+  Result? result;
+  List<Row>? row;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['list_total_count'] = listTotalCount;
+    if (result != null) {
+      map['RESULT'] = result?.toJson();
+    }
+    if (row != null) {
+      map['row'] = row?.map((v) => v.toJson()).toList();
+    }
+    return map;
+  }
+
 }
 
 class Row {
-  String schdulId;
-  String schdulTitle;
-  String dateFrom;
-  String dateTo;
-  String timeFrom;
-  String timeTo;
-  String schdulTy;
-  String schdulNm;
-  String period;
-  String periodNm;
-  String periodValue;
-  String spnser;
-  String place;
-  String city;
-  String referUrl;
-  String schdulCntent;
-
   Row({
-    required this.schdulId,
-    required this.schdulTitle,
-    required this.dateFrom,
-    required this.dateTo,
-    required this.timeFrom,
-    required this.timeTo,
-    required this.schdulTy,
-    required this.schdulNm,
-    required this.period,
-    required this.periodNm,
-    required this.periodValue,
-    required this.spnser,
-    required this.place,
-    required this.city,
-    required this.referUrl,
-    required this.schdulCntent,
-  });
+      this.lbrryseqno, 
+      this.lbrryname, 
+      this.gucode, 
+      this.codevalue, 
+      this.adres, 
+      this.fdrmclosedate, 
+      this.telno, 
+      this.xcnts, 
+      this.ydnts,});
 
-  factory Row.fromJson(Map<String, dynamic> json) {
-    return Row(
-      schdulId: json['SCHDUL_ID'],
-      schdulTitle: json['SCHDUL_TITLE'],
-      dateFrom: json['DATE_FROM'],
-      dateTo: json['DATE_TO'],
-      timeFrom: json['TIME_FROM'],
-      timeTo: json['TIME_TO'],
-      schdulTy: json['SCHDUL_TY'],
-      schdulNm: json['SCHDUL_NM'],
-      period: json['PERIOD'],
-      periodNm: json['PERIOD_NM'],
-      periodValue: json['PERIOD_VALUE'],
-      spnser: json['SPNSER'],
-      place: json['PLACE'],
-      city: json['CITY'],
-      referUrl: json['REFER_URL'],
-      schdulCntent: json['SCHDUL_CNTENT'],
-    );
+  Row.fromJson(dynamic json) {
+    lbrryseqno = json['LBRRY_SEQ_NO'];
+    lbrryname = json['LBRRY_NAME'];
+    gucode = json['GU_CODE'];
+    codevalue = json['CODE_VALUE'];
+    adres = json['ADRES'];
+    fdrmclosedate = json['FDRM_CLOSE_DATE'];
+    telno = json['TEL_NO'];
+    xcnts = json['XCNTS'];
+    ydnts = json['YDNTS'];
   }
+  String? lbrryseqno;
+  String? lbrryname;
+  String? gucode;
+  String? codevalue;
+  String? adres;
+  String? fdrmclosedate;
+  String? telno;
+  String? xcnts;
+  String? ydnts;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['LBRRY_SEQ_NO'] = lbrryseqno;
+    map['LBRRY_NAME'] = lbrryname;
+    map['GU_CODE'] = gucode;
+    map['CODE_VALUE'] = codevalue;
+    map['ADRES'] = adres;
+    map['FDRM_CLOSE_DATE'] = fdrmclosedate;
+    map['TEL_NO'] = telno;
+    map['XCNTS'] = xcnts;
+    map['YDNTS'] = ydnts;
+    return map;
+  }
+
+}
+
+class Result {
+  Result({
+      this.code, 
+      this.message,});
+
+  Result.fromJson(dynamic json) {
+    code = json['CODE'];
+    message = json['MESSAGE'];
+  }
+  String? code;
+  String? message;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['CODE'] = code;
+    map['MESSAGE'] = message;
+    return map;
+  }
+
 }

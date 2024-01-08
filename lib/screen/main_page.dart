@@ -29,7 +29,7 @@ class _MainPageState extends State<MainPage> {
             TextField(
               controller: _textController,
               onChanged: (value) {
-                // print(_textController.text);
+                print(_textController.text);
               },
               decoration: const InputDecoration(
                 labelText: 'Seoul library',
@@ -37,19 +37,19 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
             Expanded(
-              child: ListView(
-                children: const [
-                  Text('qwerasdf test'),
-                  Text('qwerasdf test'),
-                  Text('qwerasdf test'),
-                  Text('qwerasdf test'),
-                  Text('qwerasdf test'),
-                  Text('qwerasdf test'),
-                  Text('qwerasdf test'),
-                  Text('qwerasdf test'),
-                  Text('qwerasdf test'),
-                ],
-              ),
+              child: ListView.builder(
+                  itemCount: 20,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text('도서관명'),
+                      subtitle: Text('전화번호'),
+                      trailing: Text('정기휴관일'),
+
+                    );
+                  })
+
+
+
             ),
           ],
         ),
