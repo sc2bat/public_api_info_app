@@ -8,22 +8,49 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final _textController = TextEditingController();
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('도서관 일정 검색'),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(8.0),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             TextField(
-              decoration: InputDecoration(
-                labelText: 'Enter text',
+              controller: _textController,
+              onChanged: (value) {
+                // print(_textController.text);
+              },
+              decoration: const InputDecoration(
+                labelText: 'Seoul library',
                 border: OutlineInputBorder(),
               ),
-            )
+            ),
+            Expanded(
+              child: ListView(
+                children: const [
+                  Text('qwerasdf test'),
+                  Text('qwerasdf test'),
+                  Text('qwerasdf test'),
+                  Text('qwerasdf test'),
+                  Text('qwerasdf test'),
+                  Text('qwerasdf test'),
+                  Text('qwerasdf test'),
+                  Text('qwerasdf test'),
+                  Text('qwerasdf test'),
+                ],
+              ),
+            ),
           ],
         ),
       ),
