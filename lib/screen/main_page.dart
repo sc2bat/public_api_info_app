@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:library_list/screen/main_view_model.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -9,6 +10,8 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final _textController = TextEditingController();
+  final viewModel = MainViewModel();
+
 
   @override
   void dispose() {
@@ -17,7 +20,16 @@ class _MainPageState extends State<MainPage> {
   }
 
   @override
+  void initState() {
+    viewModel.searchInfo(_textController.text);
+    super.initState();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
+
+    print('quwer ${viewModel.libraryItems.length}');
     return Scaffold(
       appBar: AppBar(
         title: const Text('도서관 일정 검색'),
@@ -38,13 +50,19 @@ class _MainPageState extends State<MainPage> {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: 20,
+                  itemCount: viewModel.libraryItems.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text('도서관명'),
-                      subtitle: Text('전화번호'),
-                      trailing: Text('정기휴관일'),
+                    return Container(
+                      height: 30,
+                      width: double.infinity,
+                      color: Colors.red,
+                      child: ListTile(
+                        title: Text(viewModel.libraryItems[index].toString()),
 
+                        subtitle: Text('전화번호'),
+                        trailing: Text('정기휴관일'),
+
+                      ),
                     );
                   })
 
