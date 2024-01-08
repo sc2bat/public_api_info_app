@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:library_list/data/model/seoul_library_schedule_info.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -12,7 +9,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final List<LibraryInfo> libraryInfoList = [];
+  List result = [];
 
   @override
   void initState() {
@@ -24,52 +21,60 @@ class _MainPageState extends State<MainPage> {
 
   Future getData() async {
     final response = await dio.get(
-        'http://openapi.seoul.go.kr:8088/sample/json/SeoulLibraryTimeInfo/1/5/');
-    print(response.statusCode);
-    print(response.data);
-    final resultList = response.data['SeoulLibraryTimeInfo']['row'];
-    //error: 이미 map 형태라 디코드를 하면 에러가 난다. => Unhandled Exception: type '_Map<String, dynamic>' is not a subtype of type 'String'
-// error: []로 바로 접근해야하고 response.data를 하면 에러가 난다.
+        'http://openapi.seoul.go.kr:8088/sample/json/lostArticleInfo/1/5/');
+    // print(response.data['lostArticleInfo']['row'][0]['ID']);
 
     setState(() {
-      resultList.forEach((e) {
-        libraryInfoList.add(LibraryInfo.fromJson(e));
-      });
+      result = response.data['lostArticleInfo']['row'];
+      // print(result);
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('도서관 일정 검색'),
+        title: const Text('분실물 찾기'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             TextField(
-
               onChanged: (value) {},
               decoration: const InputDecoration(
-                labelText: 'Seoul library',
+                labelText: '분실물을 입력하세요',
                 border: OutlineInputBorder(),
               ),
             ),
-            Expanded(
+            SizedBox(height: 10),
+            Container(
+              height: 300,
               child: ListView.builder(
-                  itemCount: libraryInfoList.length,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: result.length,
                   itemBuilder: (context, index) {
-                    return
-                         ListTile(
-                          title: Text(libraryInfoList[index].libraryName),
-                          subtitle: Text(libraryInfoList[index].telNo),
-                          trailing: Text(libraryInfoList[index].formCloseDate),
-                        );
-
+                    return Card(
+                        child: Container(
+                      height: 280,
+                      width: MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('분실물: ${result[index]['GET_NAME']}', style: TextStyle(fontSize: 20),),
+                            Text('상태: ${result[index]['STATUS']}', style: TextStyle(fontSize: 20),),
+                            Text('수령일자: ${result[index]['GET_DATE']}', style: TextStyle(fontSize: 20),),
+                            Text('수령장소: ${result[index]['TAKE_PLACE']}', style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    );
                   }
-              ),
+                  ),
             ),
           ],
         ),
